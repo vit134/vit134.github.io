@@ -1,0 +1,320 @@
+
+@columnPadding: 16px;
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+.container {
+    min-width: 704px;
+    max-width: 1056px;
+    margin: 0 auto;
+}
+
+.header {
+    padding: 43px 0;
+}
+
+.logo {
+    display: block;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: repeat(6, 2fr);
+    grid-auto-flow: dense;
+    grid-gap: 38px @columnPadding;
+}
+
+.mobileVisible {
+    display: none;
+}
+
+.desktopVisible {
+    display: block;
+}
+
+.item {
+    &_size-s {
+        grid-column: span 2;
+    }
+
+    &_size-s_text {
+        grid-column: span 2;
+        display: grid;
+        grid-template-rows: max-content auto 40px; 
+        grid-template-columns: 100%;
+    }    
+
+    &_size-m {
+        grid-column: span 3;
+    }
+
+    &_size-l {
+        grid-column: span 6;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 0 @columnPadding;
+    }
+
+    &_size-s & {
+        &__title {
+            margin-bottom: 15px;
+        }
+    }
+
+    &_size-s_text & {
+        &__title {
+            height: auto;
+            max-height: 62px;
+            overflow: hidden;
+        }
+
+        &__description {
+            width: 100%;
+            max-height: 160px;
+        }
+
+        &__footer {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            align-items: center; 
+        }
+
+        &__buttons {
+            height: 100%;
+            font-size: 0;
+
+            &__button {
+                display: inline-block;
+                vertical-align: middle;
+                height: 100%;
+                width: 50%;
+                background-position: center; 
+            }
+        }
+    }
+
+    &_size-m & {
+        &__title {
+            font-size: 19px;
+            line-height: 23px;
+            height: 50px;
+            margin-bottom: 5px;
+
+            &__text {
+                max-height: 72px;
+                padding-bottom: 5px;
+            }
+        }
+    }
+
+    &_size-l & {
+        &__title {
+            font-size: 19px;
+            line-height: 23px;
+        }
+
+        &__description {
+            max-height: 160px;
+            width: auto;
+        }
+
+        &__buttons {
+            font-size: 0;
+
+            &__button {
+                display: inline-block;
+                vertical-align: middle;
+                width: 50%;
+                height: 40px;
+                
+                &_actions {
+                    background-position: left center;
+                }
+
+                &_heart {
+                    background-position: right center;
+                }
+            } 
+        }
+    }
+
+    &__image {
+        max-width: 100%;
+    }
+
+    &__title {
+        position: relative;
+        font-family: "YS Text";
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        font-size: 17px;
+        line-height: 20px;
+        color: #334D5B;
+        height: 42px;
+        margin-bottom: 5px;
+
+        &__text {
+            position: absolute;
+            width: 100%;
+            background-color: #fff;
+            z-index: 9;
+            max-height: 64px;
+            overflow: hidden;
+            padding-bottom: 5px;
+
+            &:after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                height: 5px;
+                background: #fff;
+            }
+        }
+    }
+
+    &__text-col {
+        display: grid;
+        grid-template-rows: max-content auto 40px;
+    }
+
+    &__footer {
+        display: grid;
+        grid-template-columns: 7fr 1fr;
+    }
+
+    &__description {
+        position: relative;
+        font-family: "YS Text";
+        font-size: 14px;
+        line-height: 20px;
+        max-height: 62px;
+        /*font-size: calc(~'100% - 20px');
+        line-height: calc(~'2vw - 18px');
+        max-height: calc(~'(2vw - 18px) * 3');*/
+        overflow: hidden;
+    }
+
+    &__buttons {
+        &__button {
+            height: 50%;
+
+            &_actions {
+                background: url('../img/Actions.png') center no-repeat;
+                background-size: 14px 4px; 
+            }
+
+            &_heart {
+                background: url('../img/Heart.png') center no-repeat;
+                background-size: 17px 16px; 
+            }
+        } 
+    }
+
+    &__author {
+        font-family: "YS Text";
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        font-size: 14px;
+    }
+}
+
+
+@media screen and (max-width: 1024px) {
+    .container {
+        min-width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0 25px;
+    }
+
+    .header {
+        padding: 25px 0;
+    }
+
+    .main {
+        grid-gap: 28px @columnPadding - 6;
+    }
+}
+
+@media screen and (max-width: 840px) {
+    .mobileVisible {
+        display: block;
+    }
+
+    .desktopVisible {
+        display: none;
+    }
+
+    .item {
+        &_size-l {
+            grid-template-columns: 100%;
+        }
+
+        &_size-l & {
+            &__text-col {
+                grid-template-columns: 7fr 1fr;
+                grid-template-rows: 1fr;
+                grid-gap: 0 @columnPadding;
+            }
+
+            &__description {
+                max-height: 62px;
+                //width: 296px;
+            }
+
+            &__buttons {
+                &__button {
+                    display: block;
+                    height: 50%;
+                    width: 100%;
+                    background-position: 25px center;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 649px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .header {
+        padding: 20px 0;
+    }
+
+    .item {
+        &_size-s {
+            grid-column: span 3;
+        }
+
+        &_size-s_text {
+            grid-column: span 3;
+        }
+
+        &_size-m {
+            grid-column: span 6;
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .item {
+        &_size-s {
+            grid-column: span 6;
+        }
+    }
+}
