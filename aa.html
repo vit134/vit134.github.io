@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>asdas</title>
+</head>
+<body>
+    <style type="text/css">
+        .main {
+            padding: 50px;
+            max-width: 1200px;
+            min-width: 704px;
+            margin: 0 auto;
+
+            display: grid;
+            grid-template-columns: repeat(6, 2fr);
+
+        }
+
+        .item {
+            height: 150px;
+            border: 1px solid red;
+            font-size: 150%;
+            text-align: center;
+        }
+
+        .item_s {
+            grid-column: span 2;
+        }
+
+        .item_m {
+            grid-column: span 3;
+        }
+
+        .item_l {
+            grid-column: span 6;
+        }
+    </style>
+    <div class="main">
+        <div class="item item_m">m</div>
+        <div class="item item_m">m</div>
+        <div class="item item_s">s</div>
+        <div class="item item_s">s</div>
+        <div class="item item_s">s</div>
+        <div class="item item_l">l</div>
+        <div class="item item_s">s</div>
+        <div class="item item_s">s</div>
+        <div class="item item_s">s</div>
+    </div>
+</body>
+</html>

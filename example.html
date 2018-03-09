@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>CSS Grid Examples for Yandex SID</title>
+<style type="text/css">
+        :root {
+        /* terra cotta */
+        --red-color: rgb(237, 106, 90);
+        /* blond */
+        --yellow-color: rgb(244, 241, 187);
+        /* cambridge blue */
+        --light-green-color: rgb(155, 193, 188);
+        /* cadet blue */
+        --darker-green-color: rgb(92, 164, 169);
+        /* platinum */
+        --like-white-color: rgb(230, 235, 224);
+        --blue-color: #2C6589;
+
+        --color-1: #05668D;
+        --color-2: #028090;
+        --color-3: #00A896;
+        --color-4: #02C39A;
+        --color-5: #F0F3BD;
+    }
+    .hidden {
+        display: none !important;
+    }
+    body {
+        padding: 32px;
+        font-family: 'PT Serif', Georgia, sans-serif;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .layout > header {
+        background-color: var(--yellow-color);
+        padding: 16px;
+    }
+    .layout > section {
+        color: #fff;
+        background-color: var(--darker-green-color);
+        padding: 16px;
+    }
+    .layout > main {
+        background-color: var(--light-green-color);
+        padding: 16px;
+    }
+    .layout > footer {
+        color: #fff;
+        background-color: var(--blue-color);
+        padding: 16px;
+    }
+
+    .layout_explicit {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        /* grid-template-columns: 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px */
+        grid-template-rows: 120px 1fr 120px;
+    }
+    .layout_explicit > header {
+        grid-column: 1 / 13;
+        /* grid-column: span 12; */
+    }
+    .layout_explicit > main {
+        grid-column: 1 / 10;
+    }
+    .layout_explicit > section {
+        grid-column: 10 / 13;
+    }
+    .layout_explicit > footer {
+        grid-column: 1/ 13;
+    }
+
+    .layout_explicit-area {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 120px 1fr 120px;
+        grid-template-areas: "h h h h"
+                             "c c c s"
+                             "f f f f";
+    }
+    .layout_explicit-area > header {
+        grid-area: h;
+        /* grid-area: 1 / 1 / 2 / 5; */
+    }
+    .layout_explicit-area > main {
+        grid-area: c;
+    }
+    .layout_explicit-area > section {
+        grid-area: s;
+    }
+    .layout_explicit-area > footer {
+        grid-area: f;
+    }
+
+    .item {
+        border-radius: 4px;
+        height: 50px;
+    }
+
+    .layout_inplicit_fixed {
+        display: grid;
+        grid-template-columns: repeat(4, 50px);
+        grid-auto-rows: 50px;
+        grid-gap: 8px;
+    }
+    .item {
+        grid-row: span 1;
+    }
+    .item_size_s {
+        grid-column: span 1;
+    }
+    .item_size_m {
+        grid-column: span 2;
+    }
+    .item_size_l {
+        grid-column: span 3;
+    }
+
+    .item_type_1 {
+        background-color: var(--color-1);
+    }
+    .item_type_2 {
+        background-color: var(--color-2);
+    }
+    .item_type_3 {
+        background-color: var(--color-3);
+    }
+    .item_type_4 {
+        background-color: var(--color-4);
+    }
+    .item_type_5 {
+        background-color: var(--color-5);
+    }
+
+    .layout_inplicit-not-fixed {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 50px);
+        grid-auto-rows: 50px;
+        grid-gap: 8px;
+    }
+
+    .layout_inplicit-flow {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 50px);
+        grid-auto-rows: 50px;
+        grid-gap: 8px;
+
+        grid-auto-flow: dense;
+
+    }
+
+</style>
+</head>
+
+<body>
+    <div class='layout hidden'>
+        <header>HEADER</header>
+        <main>CONTENT</main>
+        <section>
+            <header>LINKS</header>
+            <h3>TAGS</h3>
+            <h3>CATEGORIES</h3>
+            <h3>SOCIAL LINKS</h3>
+        </section>
+        <footer>FOOTER</footer>
+    </div>
+
+    <div class='layout layout_explicit-area hidden'>
+        <header>HEADER</header>
+        <main>CONTENT</main>
+        <section>
+            <header>LINKS</header>
+            <h3>TAGS</h3>
+            <h3>CATEGORIES</h3>
+            <h3>SOCIAL LINKS</h3>
+        </section>
+        <footer>FOOTER</footer>
+    </div>
+
+    <ul class="layout layout_inplicit_fixed hidden">
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+    </ul>
+
+    <ul class="layout layout_inplicit-not-fixed hidden">
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+    </ul>
+
+    <ul class="layout layout_inplicit-flow">
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+        <li class="item item_type_1 item_size_m"></li>
+        <li class="item item_type_2 item_size_s"></li>
+        <li class="item item_type_3 item_size_l"></li>
+        <li class="item item_type_4 item_size_m"></li>
+        <li class="item item_type_5 item_size_s"></li>
+    </ul>
+
+</body>
+</html>
