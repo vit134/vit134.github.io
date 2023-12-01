@@ -1,4 +1,43 @@
-.root {
-  max-width: 1200px;
-  margin: 0 auto;
+.header {
+	border-bottom: 1px solid var(--greenColor);
+}
+
+.header-inner {
+	max-width: 1400px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 0 var(--layoutHorizontalPadding);
+	height: 50px;
+}
+
+.logo {
+	cursor: default;
+	color: var(--greenColor);
+	text-shadow: 0 0 2px var(--greenColor), 0 0 5px var(--greenColor);
+	font-size: 24px;
+}
+
+.logo:hover {
+	color: var(--greenColorHover);
+    text-shadow: 0 0 2px var(--greenColorHover), 0 0 5px var(--greenColorHover);
+}
+
+.main {
+	max-width: 1400px;
+	padding: 0 var(--layoutHorizontalPadding);
+	margin: 30px auto 0;
+	display: flex;
+	gap: 24px;
+}
+
+.col_left,
+.col_right {
+	width: 50%;
+	flex-shrink: 0;
+}
+
+.col_right {
+	padding-top: 44px;
 }

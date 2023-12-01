@@ -1,6 +1,4 @@
-import data from './data';
-
-const findDigits = (str: string) => {
+const poluchatelCifr = (str: string) => {
     const res: string[] = [];
 
     for (let i = 0; i < str.length; i++) {
@@ -16,7 +14,7 @@ const findDigits = (str: string) => {
 }
 
 export const deshifrator = (data: string[]) => {
-    return data.reduce((acc, val) => acc + findDigits(val), 0);
+    return data.reduce((acc, val) => (
+        acc + poluchatelCifr(val)
+    ), 0);
 }
-
-console.log(deshifrator(data));

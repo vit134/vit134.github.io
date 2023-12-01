@@ -1,0 +1,12 @@
+body {
+    font-family: "Source Code Pro", monospace;
+    background: #0f0f23;
+    color: #cccccc;
+    font-family: "Source Code Pro", monospace;
+    font-weight: 300;
+    font-size: 14pt;
+
+	--layoutHorizontalPadding: 50px;
+	--greenColor: #00cc00;
+	--greenColorHover: #99ff99;
+}

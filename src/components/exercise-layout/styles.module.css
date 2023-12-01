@@ -1,0 +1,42 @@
+.root {
+    color: #cccccc;
+}
+
+.root em {
+    color: #ffffff;
+    font-style: normal;
+    text-shadow: 0 0 5px #ffffff;
+}
+
+.root pre {
+    display: inline-block;
+    border: 1px solid #333340 !important;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid;
+    margin: 0;
+}
+
+.root code {
+    display: inline-block;
+    font-size: 14px;
+    padding: 2px;
+    border: 1px solid #333340;
+}
+
+.title {
+    display: flex;
+    gap: 4px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.active {
+    font-weight: 300;
+    color: var(--greenColor);
+	text-shadow: 0 0 2px var(--greenColor), 0 0 5px var(--greenColor);
+}
+
+.content {
+    margin-top: 20px;
+}
