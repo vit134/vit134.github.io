@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Exersise from '../exercise-layout';
+import Exersise from '../../exercise-layout';
 
 export { default as text } from './exercise/text';
 

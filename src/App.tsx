@@ -1,5 +1,5 @@
 import React from 'react';
-import { DayOne, text } from './components/day1';
+import { DayOne, text } from './components/execises/day1';
 import { CodeBlock, dracula } from 'react-code-blocks';
 import './styles.css';
 import styles from './styles.module.css';
@@ -12,6 +12,10 @@ const App: React.FC = () => {
 				<span className={styles.logo}>
 					Advent of Code [2023]
 				</span>
+
+				<div className={styles.stars}>
+					⭐️
+				</div>
 			</div>
 		</header>
 
@@ -26,6 +30,7 @@ const App: React.FC = () => {
 						background: '#0f0f23',
 						border: `1px solid var(--greenColor)`,
 						padding: '4px 12px',
+						width: '100%'
 					}}
 					language='ts'
 					text={text}
