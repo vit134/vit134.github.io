@@ -1,5 +1,5 @@
 import React from 'react';
-import { DayOne, text } from './components/execises/day1';
+import { DayOne, partOneText, partTwoText } from './components/execises/day1';
 import { CodeBlock, dracula } from 'react-code-blocks';
 import './styles.css';
 import styles from './styles.module.css';
@@ -14,7 +14,7 @@ const App: React.FC = () => {
 				</span>
 
 				<div className={styles.stars}>
-					⭐️
+					⭐️⭐️
 				</div>
 			</div>
 		</header>
@@ -24,6 +24,7 @@ const App: React.FC = () => {
 				<DayOne />
 			</div>
 			<div className={styles['col_right']}>
+				<div>--- Part 1 ---</div>
 				<CodeBlock
 					customStyle={{background: '#0f0f23'}}
 					codeContainerStyle={{
@@ -33,7 +34,21 @@ const App: React.FC = () => {
 						width: '100%'
 					}}
 					language='ts'
-					text={text}
+					text={partOneText}
+					showLineNumbers={false}
+					theme={dracula}
+				/>
+				<div>--- Part 2 ---</div>
+				<CodeBlock
+					customStyle={{background: '#0f0f23'}}
+					codeContainerStyle={{
+						background: '#0f0f23',
+						border: `1px solid var(--greenColor)`,
+						padding: '4px 12px',
+						width: '100%'
+					}}
+					language='ts'
+					text={partTwoText}
 					showLineNumbers={false}
 					theme={dracula}
 				/>
