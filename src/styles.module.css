@@ -3,7 +3,6 @@
 }
 
 .header-inner {
-	max-width: 1400px;
 	margin: 0 auto;
 	display: flex;
 	align-items: center;
@@ -26,7 +25,6 @@
 }
 
 .main {
-	max-width: 1400px;
 	padding: 0 var(--layoutHorizontalPadding);
 	margin: 30px auto 0;
 	box-sizing: border-box;
