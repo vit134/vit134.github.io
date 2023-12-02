@@ -1,4 +1,4 @@
-const text = `const dano = {
+const dano = {
     red: 12,
     green: 13,
     blue: 14,
@@ -27,34 +27,31 @@ const parse = (str: string) => {
     return [gameNumber, setsCubes]
 }
 
-const getGamePower = (data: [number, Record<Colors, number>[]]) => {
-    const max = {
-        red: 0,
-        green: 0,
-        blue: 0,
-    }
+const aPodhodishLiTiNam = (data: [number, Record<Colors, number>[]]) => {
+    const [ind, sets] = data;
+    let result = true;
 
-    data[1].forEach(set => {
-        for (let color in set) {
-            if (set[color] > max[color]) {
-                max[color] = set[color];
+    sets.forEach(set => {
+        for (const color in set) {
+            // @ts-ignore
+            if (set[color] > dano[color]) {
+                result = false;
             }
         }
     })
 
-    return Object.values(max).reduce((acc, val) => acc * val)
+    return result ? ind : 0;
 }
 
-export const sum = (data: string[]) => {
+export const daykaCummuVsehPodhodyashihIgr = (data: string[]) => {
     return data.reduce((acc, val) => {
         const el = parse(val);
 
-        const res = getGamePower(el);
+        // @ts-ignore
+        const res = aPodhodishLiTiNam(el);
 
-        acc += getGamePower(el);
+        acc += res;
 
         return acc;
     }, 0)
-}`;
-
-export default text;
+}

@@ -1,5 +1,12 @@
 .root {
     color: #cccccc;
+    display: flex;
+    gap: 24px;
+}
+
+.col_left,
+.col_right {
+	width: 50%;
 }
 
 .root em {

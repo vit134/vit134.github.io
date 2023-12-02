@@ -1,19 +1,23 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
 
-type Props = PropsWithChildren<{
-    title: string;
-    active: boolean;
-}>
+type Props = {
+    ExerciseComponent: React.ComponentType;
+    CodeComponent: React.ComponentType;
+}
 
-const Exercise: React.FC<Props> = ({ active, title, children }) => {
+const Exercise: React.FC<Props> = ({ ExerciseComponent, CodeComponent }) => {
     return (
         <div className={styles.root}>
-            <h4 className={styles.title}>
-                {active && <span className={styles.active}>{'>'}</span>}
-                <span>{title}</span>
-            </h4>
-            <div className={styles.content}>{children}</div>
+            <div className={styles['col_left']}>
+                <div className={styles.content}>
+                    <ExerciseComponent />
+                </div>
+            </div>
+            
+            <div className={styles['col_right']}>
+                <CodeComponent />
+            </div>
         </div>
     );
 }

@@ -1,62 +1,50 @@
-import React from 'react';
-import { DayOne, partOneText, partTwoText } from './components/execises/day1';
-import { CodeBlock, dracula } from 'react-code-blocks';
+import React, { useState } from 'react';
+import { DayOne } from './execises/day1';
+import { DayTwo } from './execises/day2';
 import './styles.css';
 import styles from './styles.module.css';
+import { Menu } from './components/menu';
+
+const Content:React.FC<{ activeItem: string }> = ({ activeItem }) => {
+	switch (activeItem) {
+		case 'day 1':
+			return <DayOne />
+
+		case 'day 2':
+			return <DayTwo />
+	
+		default:
+			return null;
+	}
+}
 
 const App: React.FC = () => {
-  return (
-	<div className={styles.root}>
-		<header className={styles.header}>
-			<div className={styles['header-inner']}>
-				<span className={styles.logo}>
-					Advent of Code [2023]
-				</span>
+	const [activeItem, setActiveItem] = useState('day 2');
 
-				<div className={styles.stars}>
-					⭐️⭐️
+	return (
+		<div className={styles.root}>
+			<header className={styles.header}>
+				<div className={styles['header-inner']}>
+					<span className={styles.logo}>
+						Advent of Code [2023]
+					</span>
+
+					<div className={styles.stars}>
+						⭐️⭐️⭐️⭐️
+					</div>
 				</div>
-			</div>
-		</header>
+			</header>
 
-		<main className={styles.main}>
-			<div className={styles['col_left']}>
-				<DayOne />
-			</div>
-			<div className={styles['col_right']}>
-				<div>--- Part 1 ---</div>
-				<CodeBlock
-					customStyle={{background: '#0f0f23'}}
-					codeContainerStyle={{
-						background: '#0f0f23',
-						border: `1px solid var(--greenColor)`,
-						padding: '4px 12px',
-						width: '100%'
-					}}
-					language='ts'
-					text={partOneText}
-					showLineNumbers={false}
-					theme={dracula}
-				/>
-				<div>--- Part 2 ---</div>
-				<CodeBlock
-					customStyle={{background: '#0f0f23'}}
-					codeContainerStyle={{
-						background: '#0f0f23',
-						border: `1px solid var(--greenColor)`,
-						padding: '4px 12px',
-						width: '100%'
-					}}
-					language='ts'
-					text={partTwoText}
-					showLineNumbers={false}
-					theme={dracula}
-				/>
-			</div>
-		</main>
+			<main className={styles.main}>
+				<Menu data={['day 1', 'day 2']} activeItem={activeItem} onChange={setActiveItem}/>
 
-	</div>
-  );
+				<div className={styles.content}>
+					<Content activeItem={activeItem} />
+				</div>
+			</main>
+
+		</div>
+	);
 }
 
 export default App;

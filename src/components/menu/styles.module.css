@@ -1,0 +1,26 @@
+.root {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.item {
+    background: inherit;
+    color: var(--greenColor);
+	text-shadow: 0 0 2px var(--greenColor), 0 0 5px var(--greenColor);
+    outline: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: 300;
+}
+
+.item:hover {
+    color: var(--greenColorHover);
+    text-shadow: 0 0 2px var(--greenColorHover), 0 0 5px var(--greenColorHover);
+}
+
+.item.active {
+    color: var(--greenColorHover);
+    text-shadow: 0 0 2px var(--greenColorHover), 0 0 5px var(--greenColorHover);
+}
