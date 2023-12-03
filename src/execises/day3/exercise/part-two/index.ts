@@ -1,61 +1,139 @@
-const dano = {
-    red: 12,
-    green: 13,
-    blue: 14,
+import data from '../data';
+
+const Symbols = {
+    '*': true,
+    '.': false
 };
 
-type Colors = keyof typeof dano;
-
-const parse = (str: string) => {
-    const [game, sets] = str.split(':')
-    const gameNumber = Number(game.split(' ')[1]);
-
-    const setsArr = sets.split(';');
-
-    const setsCubes = setsArr.map(el => {
-        const cubes = el.split(',');
-
-        return cubes.reduce<Record<string, number>>((acc, val) => {
-            const [count, color] = val.trim().split(' ');
-
-            acc[color] = Number(count);
-
-            return acc;
-        }, {})
-    })
-
-    return [gameNumber, setsCubes]
+const isAllowed = (symbol: string) => {
+    // @ts-ignore
+    return Symbols[symbol];
 }
 
-const getGamePower = (data: [number, Record<Colors, number>[]]) => {
-    const max = {
-        red: 0,
-        green: 0,
-        blue: 0,
-    }
+const isDigit = (symbol: string) => {
+    return !Number.isNaN(Number(symbol));
+}
 
-    data[1].forEach(set => {
-        for (let color in set) {
-            // @ts-ignore
-            if (set[color] > max[color]) {
-                // @ts-ignore
-                max[color] = set[color];
-            }
+const isDetal = (arr: string[], startInd: number, endInd: number) => {
+    const from = startInd > 0 ? startInd - 1 : startInd;
+    const to = (endInd < arr.length ? endInd + 1 : endInd) + 1
+    
+    const sub = arr.slice(from, to);
+
+    return sub.reduce<[boolean, null | number]>((acc, val, ind) => {
+        if (isAllowed(val)) {
+            acc = [true, from + ind];
         }
-    })
-
-    return Object.values(max).reduce((acc, val) => acc * val)
-}
-
-export const sum = (data: string[]) => {
-    return data.reduce((acc, val) => {
-        const el = parse(val);
-
-        // @ts-ignore
-        const res = getGamePower(el);
-
-        acc += res;
 
         return acc;
-    }, 0)
+    }, [false, null]);
+}
+
+export const poschitalKolichestvoDetaley = (data: string[]) => {
+    const res = [];
+    const lastCoords = {};
+
+    for (let i = 0; i < data.length; i++) {
+        const prev = data[i-1] ? data[i-1].split('') : null;
+        const cur = data[i].split('');
+        const next = data[i+1] ? data[i+1].split('') : null;
+
+        let tmp = '';
+        let startInd = null;
+        let endInd = null;
+
+        for (let j = 0; j <= cur.length; j++) {
+            const letter = cur[j];
+            
+            if (isDigit(letter)) {
+                if (startInd === undefined || startInd === null) {
+                    startInd = j;
+                }
+
+                endInd = j;
+
+                tmp += letter;
+            } else if (!isDigit(letter) || !cur[j+1]) {
+                if (isAllowed(letter)) {
+                    if (tmp) {
+                        // @ts-ignore
+                        if (lastCoords[`${i}-${j}`]) {
+                            // @ts-ignore
+                            lastCoords[`${i}-${j}`].push(tmp);
+                        } else {
+                            // @ts-ignore
+                            lastCoords[`${i}-${j}`] = [tmp];
+                        }
+
+                        res.push(Number(tmp));
+                    }
+                } else {
+                    if (tmp && startInd !== null && endInd !== null) {
+                        let stoitLiDobavitDetal = false;
+
+                        if (prev) {
+                            const [detal, ind] = isDetal(prev, startInd, endInd);
+
+                            if (detal) {
+                                // console.log('prev', tmp, i-1, ind)
+                                // @ts-ignore
+                                if (lastCoords[`${i-1}-${ind}`]) {
+                                    // @ts-ignore
+                                    lastCoords[`${i-1}-${ind}`].push(tmp);
+                                } else {
+                                    // @ts-ignore
+                                    lastCoords[`${i-1}-${ind}`] = [tmp];
+                                }
+                                stoitLiDobavitDetal = true;
+                            }
+                        }
+
+                        if (startInd > 0) {
+                            if (isAllowed(cur[startInd - 1])) {
+                                // @ts-ignore
+                                if (lastCoords[`${i}-${startInd - 1}`]) {
+                                    // @ts-ignore
+                                    lastCoords[`${i}-${startInd - 1}`].push(tmp);
+                                } else {
+                                    // @ts-ignore
+                                    lastCoords[`${i}-${startInd - 1}`] = [tmp];
+                                }
+
+                                stoitLiDobavitDetal = true;
+                            }
+                        }
+
+                        if (next) {
+                            const [detal, ind] = isDetal(next, startInd, endInd);
+
+                            if (detal) {
+                                // console.log('next', tmp, i+1, ind)
+                                // @ts-ignore
+                                if (lastCoords[`${i+1}-${ind}`]) {
+                                    // @ts-ignore
+                                    lastCoords[`${i+1}-${ind}`].push(tmp);
+                                } else {
+                                    // @ts-ignore
+                                    lastCoords[`${i+1}-${ind}`] = [tmp];
+                                }
+                                stoitLiDobavitDetal = true;
+                            }
+                        }
+
+                        if (stoitLiDobavitDetal) {
+                            console.log(lastCoords)
+                            res.push(Number(tmp));
+                        }
+                    }
+                }
+
+                startInd = null;
+                endInd = null;
+                tmp = '';
+            }
+        }
+        
+    }
+
+    return Object.values(lastCoords).filter(el => el.length > 1).reduce((acc, [first, second]) => acc + (first * second), 0);
 }

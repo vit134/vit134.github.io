@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Exersise from '../../components/exercise-layout';
-import './exercise/part-one'
+import './exercise/part-two'
 import { CodeBlock } from '../../components/code-block';
 
 import partOneText from './exercise/part-one/text';
