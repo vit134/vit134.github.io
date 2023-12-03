@@ -29,9 +29,19 @@ const isDetal = (arr: string[], startInd: number, endInd: number) => {
     }, [false, null]);
 }
 
+const saveCoords = (obj: Record<string, number[]>, coords: [number, number], number: number) => {
+    const [y, x] = coords;
+
+    if (obj[`${y}-${x}`]) {
+        obj[`${y}-${x}`].push(number);
+    } else {
+        obj[`${y}-${x}`] = [number];
+    }
+}
+
 export const poschitalKolichestvoDetaley = (data: string[]) => {
     const res = [];
-    const lastCoords = {};
+    const lastCoords: Record<string, number[]> = {};
 
     for (let i = 0; i < data.length; i++) {
         const prev = data[i-1] ? data[i-1].split('') : null;
@@ -56,50 +66,23 @@ export const poschitalKolichestvoDetaley = (data: string[]) => {
             } else if (!isDigit(letter) || !cur[j+1]) {
                 if (isAllowed(letter)) {
                     if (tmp) {
-                        // @ts-ignore
-                        if (lastCoords[`${i}-${j}`]) {
-                            // @ts-ignore
-                            lastCoords[`${i}-${j}`].push(tmp);
-                        } else {
-                            // @ts-ignore
-                            lastCoords[`${i}-${j}`] = [tmp];
-                        }
+                        saveCoords(lastCoords, [i, j], Number(tmp));
 
                         res.push(Number(tmp));
                     }
                 } else {
                     if (tmp && startInd !== null && endInd !== null) {
-                        let stoitLiDobavitDetal = false;
-
                         if (prev) {
                             const [detal, ind] = isDetal(prev, startInd, endInd);
 
                             if (detal) {
-                                // console.log('prev', tmp, i-1, ind)
-                                // @ts-ignore
-                                if (lastCoords[`${i-1}-${ind}`]) {
-                                    // @ts-ignore
-                                    lastCoords[`${i-1}-${ind}`].push(tmp);
-                                } else {
-                                    // @ts-ignore
-                                    lastCoords[`${i-1}-${ind}`] = [tmp];
-                                }
-                                stoitLiDobavitDetal = true;
+                                saveCoords(lastCoords, [i-1, ind as number], Number(tmp));
                             }
                         }
 
                         if (startInd > 0) {
                             if (isAllowed(cur[startInd - 1])) {
-                                // @ts-ignore
-                                if (lastCoords[`${i}-${startInd - 1}`]) {
-                                    // @ts-ignore
-                                    lastCoords[`${i}-${startInd - 1}`].push(tmp);
-                                } else {
-                                    // @ts-ignore
-                                    lastCoords[`${i}-${startInd - 1}`] = [tmp];
-                                }
-
-                                stoitLiDobavitDetal = true;
+                                saveCoords(lastCoords, [i, startInd - 1], Number(tmp));
                             }
                         }
 
@@ -107,22 +90,8 @@ export const poschitalKolichestvoDetaley = (data: string[]) => {
                             const [detal, ind] = isDetal(next, startInd, endInd);
 
                             if (detal) {
-                                // console.log('next', tmp, i+1, ind)
-                                // @ts-ignore
-                                if (lastCoords[`${i+1}-${ind}`]) {
-                                    // @ts-ignore
-                                    lastCoords[`${i+1}-${ind}`].push(tmp);
-                                } else {
-                                    // @ts-ignore
-                                    lastCoords[`${i+1}-${ind}`] = [tmp];
-                                }
-                                stoitLiDobavitDetal = true;
+                                saveCoords(lastCoords, [i+1, ind as number], Number(tmp));
                             }
-                        }
-
-                        if (stoitLiDobavitDetal) {
-                            console.log(lastCoords)
-                            res.push(Number(tmp));
                         }
                     }
                 }
@@ -135,5 +104,9 @@ export const poschitalKolichestvoDetaley = (data: string[]) => {
         
     }
 
-    return Object.values(lastCoords).filter(el => el.length > 1).reduce((acc, [first, second]) => acc + (first * second), 0);
+    return Object.values(lastCoords)
+        .filter(el => el.length > 1)
+        .reduce((acc, [first, second]) => acc + (first * second), 0);
 }
+
+console.log(poschitalKolichestvoDetaley(data), poschitalKolichestvoDetaley(data) === 72553319)
