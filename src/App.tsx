@@ -34,7 +34,7 @@ const App: React.FC = () => {
 					</span>
 
 					<div className={styles.stars}>
-						⭐️⭐️⭐️⭐️
+						⭐️⭐️⭐️⭐️⭐️
 					</div>
 				</div>
 			</header>

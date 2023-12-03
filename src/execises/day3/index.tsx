@@ -44,7 +44,11 @@ const Ex = () => (
 const Code = () => {
     return (
         <>
-            
+            <p>
+                <em>--- Part 1 ---</em>
+            </p>
+
+            <CodeBlock code={partOneText}/>
         </>
     );
 }
