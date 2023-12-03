@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DayOne } from './execises/day1';
 import { DayTwo } from './execises/day2';
+import { DayThree } from './execises/day3';
 import './styles.css';
 import styles from './styles.module.css';
 import { Menu } from './components/menu';
@@ -12,6 +13,9 @@ const Content:React.FC<{ activeItem: string }> = ({ activeItem }) => {
 
 		case 'day 2':
 			return <DayTwo />
+
+		case 'day 3':
+			return <DayThree />
 	
 		default:
 			return null;
@@ -19,7 +23,7 @@ const Content:React.FC<{ activeItem: string }> = ({ activeItem }) => {
 }
 
 const App: React.FC = () => {
-	const [activeItem, setActiveItem] = useState('day 2');
+	const [activeItem, setActiveItem] = useState('day 3');
 
 	return (
 		<div className={styles.root}>
@@ -36,7 +40,7 @@ const App: React.FC = () => {
 			</header>
 
 			<main className={styles.main}>
-				<Menu data={['day 1', 'day 2']} activeItem={activeItem} onChange={setActiveItem}/>
+				<Menu data={['day 1', 'day 2', 'day 3']} activeItem={activeItem} onChange={setActiveItem}/>
 
 				<div className={styles.content}>
 					<Content activeItem={activeItem} />

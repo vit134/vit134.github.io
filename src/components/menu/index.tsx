@@ -20,6 +20,7 @@ export const Menu: React.FC<Props> = ({ data, activeItem, onChange }) => {
 
                     return (
                         <button
+                            key={el}
                             className={`${styles.item} ${activeItem === el ? styles.active : ''}`}
                             onClick={handleClick}>
                             [ {el} ]
