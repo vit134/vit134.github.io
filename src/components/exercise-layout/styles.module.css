@@ -4,9 +4,12 @@
     gap: 24px;
 }
 
-.col_left,
+.col_left {
+	width: 40%;
+}
+
 .col_right {
-	width: 50%;
+    flex-grow: 1;
 }
 
 .root em {

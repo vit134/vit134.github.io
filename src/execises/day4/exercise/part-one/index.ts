@@ -6,7 +6,7 @@ const parseCard = (str: string): [string, [string[], string[]]] => {
 
     return [cardNumber, [
         win.trim().match(/[0-9]+/g) as string[],
-        have.trim().match(/[0-9]+/g) as string[],
+        have.trim().match(/[0-9]+/g) as string[]
     ]];
 }
 

@@ -108,5 +108,3 @@ export const poschitalKolichestvoDetaley = (data: string[]) => {
         .filter(el => el.length > 1)
         .reduce((acc, [first, second]) => acc + (first * second), 0);
 }
-
-console.log(poschitalKolichestvoDetaley(data), poschitalKolichestvoDetaley(data) === 72553319)
