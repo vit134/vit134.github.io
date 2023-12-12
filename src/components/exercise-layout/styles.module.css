@@ -6,6 +6,7 @@
 
 .col_left {
 	width: 40%;
+    flex-shrink: 0;
 }
 
 .col_right {

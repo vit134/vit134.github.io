@@ -24,7 +24,10 @@ const daiDannieKarti = (map: string[]) => {
     return dannie;
 }
 
-const naidiZnachenieDlyaSleduscheyKarti = (value: number, intervals: Record<string, { interval: string; length: number }>) => {
+const naidiZnachenieDlyaSleduscheyKarti = (value: number, intervals: Record<string, {
+    interval: string;
+    length: number
+}>) => {
     const intArr = Object.entries(intervals);
     let result = value;
 

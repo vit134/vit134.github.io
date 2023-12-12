@@ -1,7 +1,6 @@
-// import { seeds, maps } from '../data';
-import { seeds, maps } from './mock';
+const { seeds, maps } = require('../data');
 
-const getSeedIntervals = (str: string) => {
+const getSeedIntervals = (str) => {
     const arr = str.split(' ').map(el => Number(el));
     const result = [];
 
@@ -14,25 +13,19 @@ const getSeedIntervals = (str: string) => {
     return result.sort((a, b) => a[0] - b[0]);
 }
 
-const createInterval = (from: number, length: number) => {
+const createInterval = (from, length) => {
     return [from, from + length - 1];
 }
 
-const sortIntervals = (intervals: number[][][][]) => {
+const sortIntervals = (intervals) => {
     for (let i = 0; i < intervals.length; i++) {
         const [sourceIntervals, distIntervals] = intervals[i];
 
         const list = [];
+        for (let j = 0; j < sourceIntervals.length; j++) 
+            list.push({'source': sourceIntervals[j], 'dist': distIntervals[j]});
 
-        for (let j = 0; j < sourceIntervals.length; j++) {
-            list.push({
-                source: sourceIntervals[j],
-                dist: distIntervals[j]
-            });
-        }
-
-        list.sort((a, b) => {
-            // @ts-ignore
+        list.sort(function(a, b) {
             return ((a.source[0] < b.source[0]) ? -1 : ((a.source[0] === b.source[0]) ? 0 : 1));
         });
 
@@ -45,7 +38,7 @@ const sortIntervals = (intervals: number[][][][]) => {
     return intervals;
 }
 
-const mergeIntervals = (source: number[][], dist: number[][]): [string, number[][]] => {
+const mergeIntervals = (source, dist) => {
     const sourceStr = `${source[0][0]}-${source[source.length -1 ][1]}`;
 
     const distRanges = [];
@@ -69,13 +62,13 @@ const getRanges = () => {
     for (let i = 0; i < maps.length; i++) {
         const map = maps[i];
 
-        const sub: number[][][] = [[], []];
+        const sub = [[], []];
 
         for (let j = 0; j < map.length; j++) {
             const row = map[j];
-            const [dist, source, len] = row.split(' ').map((el: string) => Number(el));
+            const [dist, source, len] = row.split(' ').map(el => Number(el));
             
-            sub[0].push(createInterval(source as number, len as number))
+            sub[0].push(createInterval(source, len))
             sub[1].push(createInterval(dist, len))
         }
 
@@ -86,7 +79,6 @@ const getRanges = () => {
 
     return sorted.reduce((acc, el) => {
         const [key, value] = mergeIntervals(el[0], el[1]);
-        // @ts-ignore
         acc.push([key, value]);
 
         return acc;
@@ -95,7 +87,7 @@ const getRanges = () => {
 
 const ranges = getRanges();
 
-const findDistInRange = (value: number, range: [string, number[][]]) => {
+const findDistInRange = (value, range) => {
     const [sourceInterval, dists] = range;
 
     const [from, to] = sourceInterval.split('-');
@@ -122,12 +114,11 @@ const findDistInRange = (value: number, range: [string, number[][]]) => {
     return value;
 }
 
-const findLocationForSeed = (seedValue: number, debug = false) => {
+const findLocationForSeed = (seedValue, debug = false) => {
     const start = performance.now();
     let result = seedValue;
 
     for (let i = 0; i < ranges.length; i++) {
-        // @ts-ignore
         result = findDistInRange(result, ranges[i]);
 
         if (debug) {
@@ -138,7 +129,7 @@ const findLocationForSeed = (seedValue: number, debug = false) => {
     return result;
 }
 
-const findMinLocation = (seedIntervals: number[][]) => {
+const findMinLocation = (seedIntervals) => {
     let result;
 
     for (let i = 0; i < seedIntervals.length; i++) {
@@ -158,7 +149,7 @@ const findMinLocation = (seedIntervals: number[][]) => {
             }
         }
 
-        if (result === undefined || intervalMinLocation as number < result) {
+        if (result === undefined || intervalMinLocation < result) {
             result = intervalMinLocation
         }
     }
@@ -171,3 +162,7 @@ const findMinLocation = (seedIntervals: number[][]) => {
 
     findMinLocation(intervals);
 })()
+
+
+
+
