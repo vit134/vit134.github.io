@@ -1,3 +1,5 @@
+import { data } from '../part-two/data'
+
 const prepareData = (data: Record<'time' | 'distance', number[]>) => {
     return data.time.reduce<number[][]>((acc, val, ind) => {
         acc.push([val, data.distance[ind]]);
@@ -37,3 +39,13 @@ export const calculate = (data: number[][]) => {
 
     return result.reduce((acc, val) => acc *= val);   
 }
+
+(() => {
+    console.group('part one');
+    const d = prepareData(data);
+    const start = performance.now();
+    console.log('🚀 ~ calculate ~ calculate:', calculate(d));
+
+    console.log('time spent: ', performance.now() - start);
+    console.groupEnd();
+})()

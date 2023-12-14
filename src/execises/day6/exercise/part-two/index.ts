@@ -1,3 +1,6 @@
+// import { data } from './mock';
+import { data } from './data';
+
 const prepareData = (data: Record<'time' | 'distance', number[]>) => {
     return data.time.reduce<number[][]>((acc, val, ind) => {
         acc.push([val, data.distance[ind]]);
@@ -16,16 +19,38 @@ const calculateDistance = (holdTime: number, totalTime: number) => {
 const calculateRecordAttempts = (ms: number, record: number) => {
     const max = ms - 1;
 
-    const result = [];
+    let i = 1;
+    let j = max;
 
-    for (let k = 1; k <= max; k++) {
-        const dis = calculateDistance(k, ms);
-        if (dis > record) {
-            result.push(k);
+    let disFrom = 0;
+    let disTo = 0;
+
+    let hasFrom = false;
+    let hasTo = false;
+
+    while (disFrom < record && disTo < record) {
+        if (!hasFrom) {
+            disFrom = calculateDistance(i, ms);
+
+            if (disFrom < record) {
+                i++;
+            } else {
+                hasFrom = true;
+            }
+        }
+
+        if (!hasTo) {
+            disTo = calculateDistance(j, ms);
+
+            if (disTo < record) {
+                j--;
+            } else {
+                hasTo = true;
+            }
         }
     }
 
-    return result.length;
+    return j - i + 1;
 }
 
 export const calculate = (data: number[][]) => {
@@ -37,3 +62,13 @@ export const calculate = (data: number[][]) => {
 
     return result.reduce((acc, val) => acc *= val);   
 }
+
+(() => {
+    console.group('part two');
+    const d = prepareData(data);
+    const start = performance.now();
+    console.log('🚀 ~ calculate ~ calculate:', calculate(d));
+
+    console.log('time spent: ', performance.now() - start);
+    console.groupEnd();
+})()

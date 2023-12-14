@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Exersise from '../../components/exercise-layout';
 import { CodeBlock } from '../../components/code-block';
-import './exercise/part-two';
 
 import partOneText from './exercise/part-one/text';
 import partTwoText from './exercise/part-two/text';
@@ -64,10 +63,16 @@ const Code = () => {
     return (
         <>
             <p>
-                <em>--- Same solution ---</em>
+                <em>--- Head-on solution ---</em>
             </p>
 
             <CodeBlock code={partOneText}/>
+
+            <p>
+                <em>--- Fast solution ---</em>
+            </p>
+
+            <CodeBlock code={partTwoText}/>
         </>
     );
 }
