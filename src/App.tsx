@@ -50,7 +50,7 @@ const App: React.FC = () => {
 					</span>
 
 					<div className={styles.stars}>
-						13*
+						14*
 					</div>
 				</div>
 			</header>
