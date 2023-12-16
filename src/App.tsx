@@ -58,7 +58,7 @@ const App: React.FC = () => {
 					</span>
 
 					<div className={styles.stars}>
-						16*
+						18*
 					</div>
 				</div>
 			</header>
