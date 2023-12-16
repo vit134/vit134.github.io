@@ -1,171 +1,67 @@
-// import { data } from './mock';
-import { data } from '../data';
+// import { path, data } from './mock';
+import { path, data } from '../data';
 
-const Marks: Record<string, number> = {
-    A: 13,
-    K: 12,
-    Q: 11,
-    T: 10,
-    9: 9,
-    8: 8, 
-    7: 7,
-    6: 6,
-    5: 5,
-    4: 4,
-    3: 3,
-    2: 2,
-    J: 1,
-};
-
-enum Types {
-    'DIFF' = 'diff',
-    'FIVE' = 'five',
-    'FULLHOUSE' = 'fullhouse',
-    'FOUR' = 'four',
-    'THREE' = 'three',
-    'TWOPAIR' = 'twopair',
-    'PAIR' = 'pair',
+const PathItems: Record<string, 'left' | 'right'> = {
+    L: 'left',
+    R: 'right'
 }
 
-const HandTypes: Record<string, Types> = {
-    '5': Types.FIVE,
-    '11111': Types.DIFF,
-    '23': Types.FULLHOUSE,
-    '14': Types.FOUR,
-    '113': Types.THREE,
-    "122": Types.TWOPAIR,
-    '1112': Types.PAIR
-};
+const parseRow = (row: string) => row.match(/[A-Z0-9]{3}/g) as string[];
+const isStartNode = (row: string) => new RegExp(/[A-Z0-9]{2}A/).test(row);
+const isFinishNode = (row: string) => new RegExp(/[A-Z0-9]{2}Z/).test(row);
 
-const HandTypesRates = {
-    [Types.FIVE]: 6,
-    [Types.FOUR]: 5,
-    [Types.FULLHOUSE]: 4,
-    [Types.THREE]: 3,
-    [Types.TWOPAIR]: 2,
-    [Types.PAIR]: 1,
-    [Types.DIFF]: 0,
-}
+const toObj = (data: string[][]) => {
+    return data.reduce<Record<string, { left: string; right: string; node: string}>>((acc, row) => {
+        const [node, left, right] = row;
 
-const handTypesMemo: Record<string, Types> = {};
-
-const compareTwoSameHandType = (cardOne: string, cardTwo: string) => {
-    if (cardOne === cardTwo) {
-        return 0;
-    }
-
-    for (let i = 0; i < cardOne.length; i++) {
-        const oneWeight = Marks[cardOne[i]];
-        const twoWeight = Marks[cardTwo[i]];
-
-        if (cardOne[i] !== cardTwo[i]) {
-            if (oneWeight > twoWeight) {
-                return 1;
-            }
-            
-            if (oneWeight < twoWeight){
-                return -1;
-            }
-        }
-    }
-
-    return 0;
-}
-
-const getHandTypeWithJoker = (numbered: string, hand: string, debug: boolean) => {
-    const simpleType = HandTypes[numbered];
-    const jokerCount = (hand.match(/J/g) as string[]).length;
-
-    let result = simpleType;
-
-    switch (simpleType) {
-        case Types.DIFF: { // 11111
-            result = Types.PAIR;
-            break;
-        }
-
-        case Types.PAIR: { // 1112
-            result = Types.THREE;
-            break;
-        }
-
-        case Types.THREE: { // 113
-            result = Types.FOUR;
-            break;
-        }
-
-        case Types.TWOPAIR: { // 122
-            if (jokerCount > 1) {
-                result = Types.FOUR
-                break;
-            }
-
-            result = Types.FULLHOUSE
-            break;
-        }
-
-        case Types.FULLHOUSE: {
-            result = Types.FIVE;
-            break;
-        }
-
-        case Types.FOUR: { // 14
-            result = Types.FIVE
-            break;
-        }
-    }
-
-    return result;
-}
-
-const getHandType = (hand: string) => {
-    const obj: Record<string|number, number> = {};
-
-    if (hand in handTypesMemo) {
-        return handTypesMemo[hand];
-    }
-
-    for (let i = 0; i < hand.length; i++) {
-        obj[hand[i]] = obj[hand[i]] ? obj[hand[i]] + 1 : 1;
-    }
-
-    const arr = Object.values(obj).sort((a, b) => a - b);
-    const numbered = arr.join('');
-
-    let result = HandTypes[numbered];
-
-    if ('J' in obj) {
-        result = getHandTypeWithJoker(numbered, hand, HandTypes[numbered] === Types.FULLHOUSE);
-    }
-
-    handTypesMemo[hand] = result;
-
-    return result;
-}
-
-const sortHands = (hands: string[]) => {
-    return hands.sort((handOne, handTwo) => {
-        const handOneType = getHandType(handOne.split(' ')[0]);
-        const handTwoType = getHandType(handTwo.split(' ')[0]);
-
-        if (handOneType !== handTwoType) {
-            return HandTypesRates[handOneType] - HandTypesRates[handTwoType]
-        }
-        
-        return compareTwoSameHandType(handOne.split(' ')[0], handTwo.split(' ')[0])
-    })
-}
-
-export const calculate = () => {
-    const sorted = sortHands(data);
-
-    return sorted.reduce((acc, val, ind) => {
-        const [hand, rate] = val.split(' ');
-
-        acc += Number(rate) * (ind + 1);
+        acc[node] = { node, left, right };
 
         return acc;
-    }, 0)
+    }, {})
+}
+
+const gcd = (x: number, y: number): number => (y === 0 ? x : gcd(y, x % y));
+
+const lcm = (...n: number[]) => n.reduce((x, y) => (x * y) / gcd(x, y));
+
+export const calculate = (path: string, data: string[]) => {
+    const parsed = data.map(parseRow);
+    const obj = toObj(parsed);
+
+    const currentNodes = parsed
+        .filter(([node]) => isStartNode(node))
+        .map(([node]) => obj[node]);
+
+    const bla: number[] = [];
+
+    for (let k = 0; k < currentNodes.length; k++) {
+        let isFinish = false;
+
+        let currentNode = currentNodes[k];
+        let i = 0;
+
+        let res = 1;
+
+        while (!isFinish) {
+            if (i === path.length - 1) {
+                path += path;
+            }
+
+            currentNode = obj[currentNode[PathItems[path[i]]]]
+
+            if (isFinishNode(currentNode.node)) {
+                bla.push(res);
+
+                isFinish = true;
+            }
+
+            i++;
+
+            res++;
+        }
+    }
+    
+    return lcm(...bla);
 };
 
-console.log('result', calculate()); // 5905
+console.log('result', calculate(path, data))
