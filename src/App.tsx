@@ -1,53 +1,17 @@
 import React, { useState } from 'react';
-import { DayOne } from './execises/day1';
-import { DayTwo } from './execises/day2';
-import { DayThree } from './execises/day3';
-import { DayFour } from './execises/day4';
-import { DayFive } from './execises/day5';
-import { DaySix } from './execises/day6';
-import { DaySeven } from './execises/day7';
-import { DayEight } from './execises/day8';
-import { DayNine } from './execises/day9';
 import { Menu } from './components/menu';
+import Exercises from './execises';
 import './styles.css';
 import styles from './styles.module.css';
 
-const Content:React.FC<{ activeItem: string }> = ({ activeItem }) => {
-	switch (activeItem) {
-		case 'day 1':
-			return <DayOne />
-
-		case 'day 2':
-			return <DayTwo />
-
-		case 'day 3':
-			return <DayThree />
-
-		case 'day 4':
-			return <DayFour />
-		
-		case 'day 5':
-			return <DayFive />
-
-		case 'day 6':
-			return <DaySix />		
-
-		case 'day 7':
-			return <DaySeven />
-
-		case 'day 8':
-			return <DayEight />
-
-		case 'day 9':
-			return <DayNine />
-	
-		default:
-			return null;
-	}
+const Content:React.FC<{ activeItem: number }> = ({ activeItem }) => {
+	return Exercises[activeItem - 1] || null;
 }
 
 const App: React.FC = () => {
-	const [activeItem, setActiveItem] = useState('day 9');
+	const [activeItem, setActiveItem] = useState(9);
+
+	const menuItems = Exercises.map((el, ind) => ind + 1);
 
 	return (
 		<div className={styles.root}>
@@ -64,7 +28,7 @@ const App: React.FC = () => {
 			</header>
 
 			<main className={styles.main}>
-				<Menu data={['day 1', 'day 2', 'day 3', 'day 4', 'day 5', 'day 6', 'day 7', 'day 8', 'day 9']} activeItem={activeItem} onChange={setActiveItem}/>
+				<Menu data={menuItems} activeItem={activeItem} onChange={setActiveItem}/>
 
 				<div className={styles.content}>
 					<Content activeItem={activeItem} />

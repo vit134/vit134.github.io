@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './styles.module.css';
 
 type Props = {
-    data: string[];
-    activeItem: string;
-    onChange: (activeItem: string) => void
+    data: number[];
+    activeItem: number;
+    onChange: (activeItem: number) => void
 };
 
 export const Menu: React.FC<Props> = ({ data, activeItem, onChange }) => {
@@ -23,7 +23,7 @@ export const Menu: React.FC<Props> = ({ data, activeItem, onChange }) => {
                             key={el}
                             className={`${styles.item} ${activeItem === el ? styles.active : ''}`}
                             onClick={handleClick}>
-                            [ {el} ]
+                            [ Day {el} ]
                         </button>
                     );
                 })
